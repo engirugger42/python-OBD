@@ -83,15 +83,15 @@ def readDash1Values():
     fuelResponse = connection.query(fuelCmd) # send the command, and parse the response
 
     speedResponseText = speedResponse.value#.to("mph")
-    speedResponseLabel = Text(Point(75+((150-len(speedText))/2), 100), speedResponseText)
+    speedResponseLabel = Text(Point(75+((150-len(str(speedResponseText)))/2), 100), speedResponseText)
     speedResponseLabel.draw(win)
 
     rpmResponseText = rpmResponse.value    
-    rpmResponseLabel = Text(Point(250+((150-len(rpmText))/2), 100), rpmResponseText)
+    rpmResponseLabel = Text(Point(250+((150-len(str(rpmResponseText)))/2), 100), rpmResponseText)
     rpmResponseLabel.draw(win)
     
     fuelResponseText = fuelResponse.value
-    fuelResponseLabel = Text(Point(425+((150-len(fuelText))/2), 100), fuelResponseText)
+    fuelResponseLabel = Text(Point(425+((150-len(str(fuelResponseText)))/2), 100), fuelResponseText)
     fuelResponseLabel.draw(win)
 
     speedResponseLabel.draw(win)
