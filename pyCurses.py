@@ -78,35 +78,38 @@ def inside(point, rectangle):
     return ll.getX() < point.getX() < ur.getX() and ll.getY() < point.getY() < ur.getY()
     
 def readDash1Values():
+    #speed, rpm, fuel = dash1Displays()
+    
     rpmResponse = connection.query(rpmCmd) # send the command, and parse the response    
     speedResponse = connection.query(speedCmd) # send the command, and parse the response   
     fuelResponse = connection.query(fuelCmd) # send the command, and parse the response
 
-    speedResponseText = speedResponse.value#.to("mph")
-    speedResponseLabel = Text(Point(75+((150-len(str(speedResponseText)))/2), 100), speedResponseText)
-    speedResponseLabel.draw(win)
-
-    rpmResponseText = rpmResponse.value    
-    rpmResponseLabel = Text(Point(250+((150-len(str(rpmResponseText)))/2), 100), rpmResponseText)
-    rpmResponseLabel.draw(win)
+    speedResponseLabel.setText(speedResponse.value)#.to("mph"))
+    
+    rpmResponseLabel.setText(rpmResponse.value )
     
     fuelResponseText = fuelResponse.value
-    fuelResponseLabel = Text(Point(425+((150-len(str(fuelResponseText)))/2), 100), fuelResponseText)
-    fuelResponseLabel.draw(win)
-
-    speedResponseLabel.draw(win)
-    rpmResponseLabel.draw(win)
-    fuelResponseLabel.draw(win)
+    fuelResponseLabel.setText(fuelResponse.value)
+    
+    #speed.draw(win)
+    #rpm.draw(win)
+    #fuelLevel.draw(win)
        
     return rpmResponse, speedResponse, fuelResponse
 
-win.bind('<Button-1>>', button1)
+#win.bind('<Button-1>>', button1)
 left, right, quit = controlButtons()
 speed, rpm, fuelLevel = dash1Displays()
 
 centerPoint = Point(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
 text = Text(centerPoint, "")
 text.draw(win)
+speedResponseLabel = Text(Point(75+73, 100), "0.0")
+speedResponseLabel.draw(win)    
+rpmResponseLabel = Text(Point(250+73, 100), "0000")
+rpmResponseLabel.draw(win)
+fuelResponseLabel = Text(Point(425+73, 100), "0.0%")
+fuelResponseLabel.draw(win)
 
 while True:
     clickPoint = win.getMouse()
