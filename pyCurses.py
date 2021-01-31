@@ -88,12 +88,8 @@ def readDash1Values():
     
     rpmResponseLabel.setText(rpmResponse.value.to("rpm"))
     
-    #fuelResponseText = "%.2f" % round(fuelResponse.value,2)
-    fuelResponseLabel.setText(fuelResponse.value.to("percent"))
-    
-    #speed.draw(win)
-    #rpm.draw(win)
-    #fuelLevel.draw(win)
+    fuelResponseText = "%.2f" % round(fuelResponse.value.to("percent"),2)
+    fuelResponseLabel.setText(fuelResponseText)
        
     return rpmResponse, speedResponse, fuelResponse
 
@@ -112,6 +108,6 @@ fuelResponseLabel = Text(Point(425+73, 100), "0.0%")
 fuelResponseLabel.draw(win)
 
 while True:
-    clickPoint = win.getMouse()
+    clickPoint = win.checkMouse()
     processClick(clickPoint)
     rpmResponse, speedResponse, fuelResponse = readDash1Values()
