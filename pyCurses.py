@@ -7,8 +7,9 @@ obd.logger.setLevel(obd.logging.DEBUG) # enables all debug information
 WINDOW_WIDTH, WINDOW_HEIGHT = 800, 600
 
 win = GraphWin("Simple Ass OBD2 Panel", WINDOW_WIDTH, WINDOW_HEIGHT)
+#win.bind('<Button-1>>', button1)
 
-connection = obd.OBD(baudrate=38400, protocol=6, fast=False, timeout=30) # auto-connects to USB or RF port
+connection = obd.OBD(baudrate=38400, protocol="6", fast=False, timeout=30) # auto-connects to USB or RF port
 speedCmd = obd.commands.SPEED # select an OBD command (sensor)
 rpmCmd = obd.commands.RPM
 fuelCmd = obd.commands.FUEL_LEVEL
@@ -76,23 +77,22 @@ def inside(point, rectangle):
 
     return ll.getX() < point.getX() < ur.getX() and ll.getY() < point.getY() < ur.getY()
     
-def readDash1Values():
-    #speed, rpm, fuel = dash1Displays()
-    
-    rpmResponse = connection.query(rpmCmd) # send the command, and parse the response    
-    speedResponse = connection.query(speedCmd) # send the command, and parse the response   
-    fuelResponse = connection.query(fuelCmd) # send the command, and parse the response
+def readDash1Values():    
+    speedResponse = connection.query(speedCmd) # send the speed command, and parse the response   
+    rpmResponse = connection.query(rpmCmd) # send the rpm command, and parse the response
+    fuelResponse = connection.query(fuelCmd) # send the fuel command, and parse the response
 
-    speedResponseLabel.setText(speedResponse.value.to("mph"))
+    speedResponseText = speedResponse.value.to("mph").split()[0]
+    speedResponseLabel.setText(speedResponseText)
     
-    rpmResponseLabel.setText(rpmResponse.value.to("rpm"))
+    rpmResponseText = rpmResponse.value.to("rpm").split()[0]
+    rpmResponseLabel.setText(rpmResponseText)
     
     fuelResponseText = "%.2f" % round(fuelResponse.value.to("percent"),2)
     fuelResponseLabel.setText(fuelResponseText)
        
     return rpmResponse, speedResponse, fuelResponse
 
-#win.bind('<Button-1>>', button1)
 left, right, quit = controlButtons()
 speed, rpm, fuelLevel = dash1Displays()
 
