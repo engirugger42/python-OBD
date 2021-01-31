@@ -1,14 +1,14 @@
 import sys
-sys.path.insert(0, "/usr/local/lib/python3.8/dist-packages")
+#sys.path.insert(0, "/usr/local/lib/python3.8/dist-packages")
 import obd
 from graphics import *
 import tkinter
+obd.logger.setLevel(obd.logging.DEBUG) # enables all debug information
 
 WINDOW_WIDTH, WINDOW_HEIGHT = 800, 600
 
 win = GraphWin("Simple Ass OBD2 Panel", WINDOW_WIDTH, WINDOW_HEIGHT)
 
-#obd.logger.setLevel(obd.logging.DEBUG)
 connection = obd.OBD(fast=False, timeout=30) # auto-connects to USB or RF port
 speedCmd = obd.commands.SPEED # select an OBD command (sensor)
 rpmCmd = obd.commands.RPM
@@ -84,12 +84,12 @@ def readDash1Values():
     speedResponse = connection.query(speedCmd) # send the command, and parse the response   
     fuelResponse = connection.query(fuelCmd) # send the command, and parse the response
 
-    speedResponseLabel.setText(speedResponse.value)#.to("mph"))
+    speedResponseLabel.setText(speedResponse.value.to("mph"))
     
-    rpmResponseLabel.setText(rpmResponse.value )
+    rpmResponseLabel.setText(rpmResponse.value.to("rpm"))
     
-    fuelResponseText = fuelResponse.value
-    fuelResponseLabel.setText(fuelResponse.value)
+    #fuelResponseText = "%.2f" % round(fuelResponse.value,2)
+    fuelResponseLabel.setText(fuelResponse.value.to("percent"))
     
     #speed.draw(win)
     #rpm.draw(win)
