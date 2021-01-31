@@ -1,5 +1,4 @@
 import sys
-#sys.path.insert(0, "/usr/local/lib/python3.8/dist-packages")
 import obd
 from graphics import *
 import tkinter
@@ -9,7 +8,7 @@ WINDOW_WIDTH, WINDOW_HEIGHT = 800, 600
 
 win = GraphWin("Simple Ass OBD2 Panel", WINDOW_WIDTH, WINDOW_HEIGHT)
 
-connection = obd.OBD(fast=False, timeout=30) # auto-connects to USB or RF port
+connection = obd.OBD(baudrate=38400, protocol=6, fast=False, timeout=30) # auto-connects to USB or RF port
 speedCmd = obd.commands.SPEED # select an OBD command (sensor)
 rpmCmd = obd.commands.RPM
 fuelCmd = obd.commands.FUEL_LEVEL
